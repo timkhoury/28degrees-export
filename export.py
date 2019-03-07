@@ -75,7 +75,10 @@ def login(creds):
     tranLink = driver.find_element_by_xpath(u'//a[text()="View Transactions"]')
     tranLink.click()
 
-    nextBtn = get_next_btn(driver)
+    # Check we're logged in
+    testHeader = driver.find_element_by_name('Header2Text')
+    if not testHeader:
+      return None
 
     return driver
 
@@ -177,6 +180,9 @@ def export(csv, slow):
 
     creds = get_credentials()
     driver = login(creds)
+    if not driver:
+      print('Error logging in')
+      return
 
     trans = []
 
