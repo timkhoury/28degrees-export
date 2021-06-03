@@ -10,6 +10,7 @@ import codecs
 import time
 import random
 from collections import namedtuple
+import configparser
 
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
@@ -43,13 +44,18 @@ def messages(before, after_ok, after_fail):
 
 
 def get_credentials():
+    parser = configparser.ConfigParser()
+    parser.read(os.path.expanduser("~/.config/28degrees"))
 
-    print('Enter your username:')
-    lines = []
-    lines.append(raw_input())
-    lines.append(getpass())
+    try:
+        username = parser.get("credentials", "username")
+        password = parser.get("credentials", "password")
+    except:
+        print('Enter your username:')
+        username = raw_input()
+        password = getpass()
 
-    return lines
+    return [username, password]        
 
 
 def get_next_btn(browser):
