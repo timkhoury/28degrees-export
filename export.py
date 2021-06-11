@@ -171,10 +171,11 @@ def get_file_name(export_path, s_d, e_d, extension):
 
 
 def export(csv, slow):
-
     print('Use "export.py --help" to see all command line options')
+
+    waitDelay = WAIT_DELAY
     if slow:
-        WAIT_DELAY = 25
+        waitDelay = 25
 
     if not os.path.exists(export_path):
         os.makedirs(export_path)
@@ -212,8 +213,8 @@ def export(csv, slow):
             if not nextButton.is_displayed():
                 break
             nextButton.click()
-            time.sleep(WAIT_DELAY);
-        except NoSuchElementException, err:
+            time.sleep(waitDelay);
+        except NoSuchElementException:
             break
 
     new_trans = db.get_only_new_transactions(trans)
