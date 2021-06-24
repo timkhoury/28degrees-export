@@ -78,6 +78,11 @@ def login(creds):
 
     time.sleep(WAIT_DELAY)
 
+    currentExpensesValue = driver.find_element_by_id('current-expenses-value').text
+    print('#################################')
+    print('Cleared Expenses Total: %s' % currentExpensesValue)
+    print('#################################')
+
     tranLink = driver.find_element_by_xpath(u'//a[text()="View Transactions"]')
     tranLink.click()
 
@@ -87,7 +92,6 @@ def login(creds):
       return None
 
     return driver
-
 
 def fetch_transactions(driver):
 
@@ -171,8 +175,6 @@ def get_file_name(export_path, s_d, e_d, extension):
 
 
 def export(csv, slow):
-    print('Use "export.py --help" to see all command line options')
-
     waitDelay = WAIT_DELAY
     if slow:
         waitDelay = 25
